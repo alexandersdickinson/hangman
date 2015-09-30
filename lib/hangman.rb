@@ -3,9 +3,29 @@ class Hangman
   
   def initialize()
     @word = @@words[rand(@@words.length() - 1)]
+    @word_representation = []
+    @word.length().times() do
+      @word_representation.push('_')
+    end
   end
   
   def word()
     @word
+  end
+  
+  def word_representation()
+    @word_representation
+  end
+  
+  def process(letter)
+    match = false
+    word.each_char do |char|
+      match = true if char == letter
+    end
+    if match
+      true
+    else
+      false
+    end
   end
 end

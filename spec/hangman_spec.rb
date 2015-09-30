@@ -41,7 +41,15 @@ describe(Hangman) do
         end
         break if unique
       end
-      expect(hangman.process(rand_letter)).to(eq(false))
+      expect(test_hangman.process(rand_letter)).to(eq(false))
+    end
+    
+    it("returns true when there is a match") do
+      test_hangman = Hangman.new()
+      word = test_hangman.word()
+      word = word.split('')
+      letter = word[rand(word.length() - 1)]
+      expect(test_hangman.process(letter)).to(eq(true))
     end
   end
 end
