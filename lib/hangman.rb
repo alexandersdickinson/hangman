@@ -2,7 +2,7 @@ class Hangman
   @@words = %w(artichoke apple bolus donkey insomniac infarction domination dalliance traction terminus modus milieu illicit magazine catalogue chaos cavort carbuncle spelunker apiary mellifluous)
   
   def initialize()
-    @word = @@words[rand(@@words.length() - 1)]
+    @word = @@words[rand(@@words.length())]
     @word_representation = []
     @word.length().times() do
       @word_representation.push('_')
@@ -17,10 +17,14 @@ class Hangman
     @word_representation
   end
   
-  def process(letter)
+  def match(letter)
+    letter.downcase!()
     match = false
-    word.each_char do |char|
-      match = true if char == letter
+    @word_representation.each_index() do |i|
+      if @word[i] == letter
+        @word_representation[i] = letter
+        match = true
+      end
     end
     if match
       true

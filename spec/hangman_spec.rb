@@ -16,7 +16,7 @@ describe(Hangman) do
       expect(assigned).to(eq(true))
     end
     
-    it("creates an array representing the word as it will appear to the player") do
+    it("creates an array with underscores representing each letter in the word") do
       test_hangman = Hangman.new()
       word = test_hangman.word()
       word_array = []
@@ -27,29 +27,68 @@ describe(Hangman) do
     end
   end
   
-  describe("#process") do
+  describe("#match") do
+    it("works with uppercase arguments") do
+      test_hangman = Hangman.new()
+      word = test_hangman.word()
+      char = word[0].upcase()
+      expect(test_hangman.match(char)).to(eq(true))
+    end
+    
     it("returns false when there is no match") do
       test_hangman = Hangman.new()
       word = test_hangman.word()
       word = word.split('')
-      unique = false
-      rand_letter = ''
-      loop do
-        rand_letter = (rand(26) + 97).chr()
-        word.each() do |letter|
-          unique = true if rand_letter != letter
-        end
-        break if unique
-      end
-      expect(test_hangman.process(rand_letter)).to(eq(false))
+      false_letter = '7'
+      expect(test_hangman.match(false_letter)).to(eq(false))
     end
     
     it("returns true when there is a match") do
       test_hangman = Hangman.new()
       word = test_hangman.word()
       word = word.split('')
-      letter = word[rand(word.length() - 1)]
-      expect(test_hangman.process(letter)).to(eq(true))
+      letter = word[rand(word.length())]
+      expect(test_hangman.match(letter)).to(eq(true))
     end
+    
+    it("fills in letters for the word's representation when there is a match") do
+      test_hangman = Hangman.new()
+      letter = test_hangman.word()[0]
+      word = test_hangman.word()
+      word = word.split('')
+      test_representation = []
+      word.length().times() {test_representation.push('_')}
+      word.each_index do |i|
+        test_representation[i] = letter if letter == word[i]
+      end
+      test_hangman.match(letter)
+      expect(test_hangman.word_representation()).to(eq(test_representation))
+    end
+    
+    it("increments a counter representing errors when there is no match") do
+      test_hangman = Hangman.new()
+      word = test_hangman.word()
+      word = word.split('')
+      false_letter = '7'
+    end
+  end
+  
+  describe("#game_status") do
+    it("returns 1 when the player wins") do
+      test_hangman = Hangman.new()
+      word = test_hangman.word()
+      word.each_char do |char|
+        test_hangman.match(char)
+      end
+      expect(test_hangman.game_status()).to(eq(1))
+    end
+    
+    it("returns 0 when the game is still in process") do
+      test_hangman = Hangman.new()
+      word = test_hangman.word()
+      test_hangman.match(word[0])
+      expect(test_hangman.game_status()).to(eq(0))
+    end
+    
   end
 end
