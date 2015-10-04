@@ -1,0 +1,14 @@
+<ul>
+	<%@games.each() do |game|%>
+		<h2><li><a href=><%game.id()%>><%= game.name()%></a></li></h2>
+	<%end%>
+</ul>
+
+<form action='/new' method='post'>
+	<div class='form-group'>
+		<label for='name'>Name</label>
+		<input id='name' name='name' placeholder="Ralph&#39s Game" type='text' class='form-control'>
+	</div>
+	
+	<button class='btn btn-primary'>New Game</button>
+</form>
