@@ -2,6 +2,10 @@ require('rspec')
 require('hangman')
 
 describe(Hangman) do
+  before() do
+    Hangman.delete()
+  end
+  
   describe("#initialize") do
     it("randomly selects a word from a predetermined list of words") do
       words = %w(artichoke apple bolus donkey insomniac infarction domination dalliance traction terminus modus milieu illicit magazine catalogue chaos cavort carbuncle spelunker apiary mellifluous)
@@ -70,25 +74,47 @@ describe(Hangman) do
       word = test_hangman.word()
       word = word.split('')
       false_letter = '7'
+      test_hangman.match(false_letter)
+      expect(test_hangman.error_count()).to(eq(1))
     end
   end
   
   describe("#game_status") do
     it("returns 1 when the player wins") do
       test_hangman = Hangman.new()
-      word = test_hangman.word()
-      word.each_char do |char|
+      word = test_hangman.word().split('').uniq()
+      word.each() do |char|
         test_hangman.match(char)
       end
       expect(test_hangman.game_status()).to(eq(1))
     end
     
-    it("returns 0 when the game is still in process") do
+    it("returns 0 when the game is still in progress") do
       test_hangman = Hangman.new()
       word = test_hangman.word()
       test_hangman.match(word[0])
       expect(test_hangman.game_status()).to(eq(0))
     end
     
+    it("returns -1 when the players loses") do
+      test_hangman = Hangman.new()
+      false_letter = '7'
+      6.times() {test_hangman.match(false_letter)}
+      expect(test_hangman.game_status()).to(eq(-1))
+    end
+  end
+  
+  describe(".all") do
+    it("starts as an empty array") do
+      expect(Hangman.all()).to(eq([]))
+    end
+  end
+  
+  describe(".save") do
+    it("adds a game to the list of games") do
+      test_game = Hangman.new()
+      Hangman.save(test_game)
+      expect(Hangman.all()).to(eq([test_game]))
+    end
   end
 end
