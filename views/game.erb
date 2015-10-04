@@ -9,4 +9,12 @@
 	                ||
 	                ||
 	==================</pre>
-<h2><%= @game.word_representation().join('')%><h2>
+<h2><%= @game.word_representation().join(' ')%><h2>
+<form action='/<%= @game.id()%>' method='post'>
+	<div class='form-group'>
+		<label for='letter'>Letter</label>
+		<input id='letter' name='letter' type='text' class='form-control' autofocus>
+	</div>
+	
+	<button class='btn btn-primary'>Enter</button>
+</form>

@@ -14,3 +14,10 @@ post('/new') do
   Hangman.save(@game)
   erb(:game)
 end
+
+post('/:id') do
+  @game = Hangman.find(params.fetch('id').to_i())
+  letter = params.fetch('letter')
+  @game.match(letter)
+  erb(:game)
+end

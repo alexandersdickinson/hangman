@@ -2,8 +2,12 @@ class Hangman
   @@words = %w(artichoke apple bolus donkey insomniac infarction domination dalliance traction terminus modus milieu illicit magazine catalogue chaos cavort carbuncle spelunker apiary mellifluous)
   @@games = []
   
-  def initialize(name = "Ralph")
-    @word = @@words[rand(@@words.length())]
+  def initialize(name = "Ralph", word = "rand")
+    if word == "rand"
+      @word = @@words[rand(@@words.length())]
+    else
+      @word = word
+    end
     @word_representation = []
     @word.length().times() do
       @word_representation.push('_')
@@ -11,6 +15,14 @@ class Hangman
     @error_count = 0
     @id = @@games.length() + 1
     @name = name
+  end
+  
+  def name()
+    @name
+  end
+  
+  def id()
+    @id
   end
   
   def word()
@@ -35,6 +47,12 @@ class Hangman
   
   def self.save(game)
     @@games.push(game)
+  end
+  
+  def self.find(id)
+    @@games.each() do |game|
+      return game if game.id() == id
+    end
   end
   
   def match(letter)

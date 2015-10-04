@@ -117,4 +117,12 @@ describe(Hangman) do
       expect(Hangman.all()).to(eq([test_game]))
     end
   end
+  
+  describe(".find") do
+    it("returns a game based on its id") do
+      test_game = Hangman.new()
+      Hangman.save(test_game)
+      expect(Hangman.find(test_game.id())).to(eq(test_game))
+    end
+  end
 end
