@@ -41,7 +41,7 @@ class Hangman
     @@games
   end
   
-  def self.delete()
+  def self.clear()
     @@games = []
   end
   
@@ -53,6 +53,10 @@ class Hangman
     @@games.each() do |game|
       return game if game.id() == id
     end
+  end
+  
+  def self.delete(game)
+    @@games.delete(game)
   end
   
   def match(letter)

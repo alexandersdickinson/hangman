@@ -3,7 +3,7 @@ require('hangman')
 
 describe(Hangman) do
   before() do
-    Hangman.delete()
+    Hangman.clear()
   end
   
   describe("#initialize") do

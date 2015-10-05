@@ -30,7 +30,7 @@ end
 post('/:id') do
   @game = Hangman.find(params.fetch('id').to_i())
   letter = params.fetch('letter')
-  status = @game.match(letter) if letter != "continue"
+  @game.match(letter) if letter != "continue"
   if @game.error_count == 0
     @hung_man =
 "==================
@@ -44,7 +44,7 @@ post('/:id') do
                 ||
                 ||
 =================="
-    if @game.word_representation == @game.word().split('')
+    if @game.game_status() == 1
       @message = "You Win!"
       erb(:game_over)
     else
@@ -63,7 +63,7 @@ post('/:id') do
                 ||
                 ||
 =================="
-    if @game.word_representation == @game.word().split('')
+    if @game.game_status() == 1
       @message = "You Win!"
       erb(:game_over)
     else
@@ -82,7 +82,7 @@ post('/:id') do
                 ||
                 ||
 =================="
-    if @game.word_representation == @game.word().split('')
+    if @game.game_status() == 1
       @message = "You Win!"
       erb(:game_over)
     else
@@ -101,7 +101,7 @@ post('/:id') do
                 ||
                 ||
 =================="
-    if @game.word_representation == @game.word().split('')
+    if @game.game_status() == 1
       @message = "You Win!"
       erb(:game_over)
     else
@@ -120,7 +120,7 @@ post('/:id') do
                 ||
                 ||
 =================="
-    if @game.word_representation == @game.word().split('')
+    if @game.game_status() == 1
       @message = "You Win!"
       erb(:game_over)
     else
@@ -140,6 +140,7 @@ post('/:id') do
 |   |           ||
                 ||
 =================="
+    Hangman.delete(@game)
     erb(:game_over)
   end  
 end

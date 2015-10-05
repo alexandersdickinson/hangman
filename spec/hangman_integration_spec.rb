@@ -5,7 +5,7 @@ set(:show_exceptions, false)
 
 describe("the new game path") do
   before() do
-    Hangman.delete()
+    Hangman.clear()
   end
   
   it("can create new games", :type => :feature) do
@@ -38,7 +38,7 @@ end
 
 describe("the game completion path") do
   before() do
-    Hangman.delete()
+    Hangman.clear()
   end
   
   it("works correctly when the player enters the correct letter", :type => :feature) do
@@ -144,5 +144,26 @@ describe("the game completion path") do
                 ||
 =================="
     ))
+  end
+  
+  it("deletes a game that a player has lost", :type => :feature) do
+    visit('/')
+    fill_in('name', :with => "Bob")
+    click_button("New Game")
+    click_link("Back")
+    fill_in('name', :with => "Roland")
+    click_button("New Game")
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    click_link("Back")
+    expect(page).not_to(have_content("Roland"))
   end
 end
