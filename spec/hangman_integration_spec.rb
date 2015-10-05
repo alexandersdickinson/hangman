@@ -13,17 +13,18 @@ describe("the new game path") do
     fill_in('name', :with => "Ralph\'s Game")
     click_button("New Game")
     expect(page).to(have_content(
-    "==================
-     |               ||
-                     ||
-                     ||
-                     ||
-                     ||
-                     ||
-                     ||
-                     ||
-                     ||
-     =================="))
+"==================
+|               ||
+                ||
+                ||
+                ||
+                ||
+                ||
+                ||
+                ||
+                ||
+=================="
+    ))
   end
   
   it("displays the word representation below gallows", :type => :feature) do
@@ -58,18 +59,90 @@ describe("the game completion path") do
     fill_in('letter', :with => '7')
     click_button("Enter")
     expect(page).to(have_content(
-    "==================
-     |               ||
-    ..               ||
-  ( <  )             ||
-    --               ||
-                     ||
-                     ||
-                     ||
-                     ||
-                     ||
-     =================="))
+"==================
+ |              ||
+  ..            ||
+(  > )          ||
+  --            ||
+                ||
+                ||
+                ||
+                ||
+                ||
+=================="
+    ))
   end
   
-  it("draws an entire body and ends the game when players have entered 5 incorrect letters", :type => :feature)
+  it("draws an entire body and ends the game when players have entered 5 incorrect letters", :type => :feature) do
+    visit('/')
+    click_button("New Game")
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    expect(page).to(have_content(
+"==================
+ |              ||
+  ..            ||
+(  > )          ||
+  --            ||
+--|--           ||
+  |             ||
+|---|           ||
+|   |           ||
+                ||
+=================="
+    ))
+  end
+  
+  it("tells the player they lost", :type => :feature) do
+    visit('/')
+    click_button("New Game")
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    expect(page).to(have_content("You Lose!"))
+  end
+  
+  it("allows a player to leave a game at any time", :type => :feature) do
+    visit('/')
+    fill_in('name', :with => "Bob")
+    click_button("New Game")
+    click_link("Back")
+    expect(page).to(have_content("Bob"))
+  end
+  
+  it("allows a player to continue a game they have left", :type => :feature) do
+    visit('/')
+    fill_in('name', :with => "Bob")
+    click_button("New Game")
+    click_link("Back")
+    click_button("Bob")
+    expect(page).to(have_content(
+"==================
+|               ||
+                ||
+                ||
+                ||
+                ||
+                ||
+                ||
+                ||
+                ||
+=================="
+    ))
+  end
 end

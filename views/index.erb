@@ -1,6 +1,11 @@
 <ul>
 	<%@games.each() do |game|%>
-		<h2><li><a href=><%game.id()%>><%= game.name()%></a></li></h2>
+		<h2><li>
+			<form action='/<%= game.id()%>' method='post'>
+				<input type='hidden' name='letter' value='continue'>
+				<button class='btn btn-default'><%= game.name()%></a>
+			</form>
+		</li></h2>
 	<%end%>
 </ul>
 

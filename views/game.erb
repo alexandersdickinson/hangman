@@ -1,14 +1,4 @@
-<pre>	==================
-	|               ||
-	                ||
-	                ||
-	                ||
-	                ||
-	                ||
-	                ||
-	                ||
-	                ||
-	==================</pre>
+<pre><%=@hung_man%></pre>
 <h2><%= @game.word_representation().join(' ')%><h2>
 <form action='/<%= @game.id()%>' method='post'>
 	<div class='form-group'>
@@ -18,3 +8,4 @@
 	
 	<button class='btn btn-primary'>Enter</button>
 </form>
+<a href='/' class='btn btn-primary' role='button'>Back</a>
