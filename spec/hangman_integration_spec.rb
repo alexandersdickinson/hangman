@@ -166,4 +166,20 @@ describe("the game completion path") do
     click_link("Back")
     expect(page).not_to(have_content("Roland"))
   end
+  
+  it("deletes a game a player has won", :type => :feature) do
+    visit('/')
+    fill_in('name', :with => "Bob")
+    click_button("New Game")
+    click_link("Back")
+    fill_in('name', :with => "Roland")
+    click_button("New Game")
+    letters = Hangman.all()[0].word().split('').uniq()
+    letters.each() do |letter|
+      fill_in('letter', :with => letter)
+      click_button('Enter')
+    end
+    click_link("Back")
+    expect(page).not_to(have_content("Roland"))
+  end
 end

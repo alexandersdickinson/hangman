@@ -46,6 +46,7 @@ post('/:id') do
 =================="
     if @game.game_status() == 1
       @message = "You Win!"
+      Hangman.delete(@game)
       erb(:game_over)
     else
       erb(:game)
@@ -65,6 +66,7 @@ post('/:id') do
 =================="
     if @game.game_status() == 1
       @message = "You Win!"
+      Hangman.delete(@game)
       erb(:game_over)
     else
       erb(:game)
@@ -84,6 +86,7 @@ post('/:id') do
 =================="
     if @game.game_status() == 1
       @message = "You Win!"
+      Hangman.delete(@game)
       erb(:game_over)
     else
       erb(:game)
@@ -103,6 +106,7 @@ post('/:id') do
 =================="
     if @game.game_status() == 1
       @message = "You Win!"
+      Hangman.delete(@game)
       erb(:game_over)
     else
       erb(:game)
@@ -122,6 +126,7 @@ post('/:id') do
 =================="
     if @game.game_status() == 1
       @message = "You Win!"
+      Hangman.delete(@game)
       erb(:game_over)
     else
       erb(:game)
