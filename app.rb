@@ -132,8 +132,9 @@ post('/:id') do
       erb(:game)
     end
   elsif @game.error_count == 5
-     @message = "You Lose!"
-     @hung_man =
+    @word = @game.word()
+    @message = "You Lose!"
+    @hung_man =
 "==================
  |              ||
   ..            ||

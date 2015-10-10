@@ -174,12 +174,30 @@ describe("the game completion path") do
     click_link("Back")
     fill_in('name', :with => "Roland")
     click_button("New Game")
-    letters = Hangman.all()[0].word().split('').uniq()
+    letters = Hangman.all()[1].word().split('').uniq()
     letters.each() do |letter|
       fill_in('letter', :with => letter)
       click_button('Enter')
     end
     click_link("Back")
     expect(page).not_to(have_content("Roland"))
+  end
+  
+  it("displays the word when a player has lost a game", :type => :feature) do
+    visit('/')
+    fill_in('name', :with => "Bob")
+    click_button("New Game")
+    word = Hangman.all()[0].word()
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    fill_in('letter', :with => '7')
+    click_button("Enter")
+    expect(page).to(have_content(word))
   end
 end

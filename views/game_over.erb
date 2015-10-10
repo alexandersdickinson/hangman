@@ -1,4 +1,8 @@
 <pre><%=@hung_man%></pre>
-<h2><%= @game.word_representation().join(' ')%><h2>
+<%if @game.error_count() == 5%>
+	<h2><%= @word%></h2>
+<%else%>
+	<h2><%= @game.word_representation().join(' ')%><h2>
+<%end%>
 <h1><%= @message%></h1>
 <a href='/' class='btn btn-primary' role='button'>Back</a>
